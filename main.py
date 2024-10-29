@@ -15,7 +15,7 @@ class RollNumberPicker:
             rolls.append(self.pick_random_roll())
         return rolls
 
-# Get user input for roll numbers
+
 roll_numbers_list = input("Enter roll numbers separated by commas: ").split(',')
 # Convert input to integers
 roll_numbers_list = [int(roll.strip()) for roll in roll_numbers_list]
@@ -24,16 +24,9 @@ roll_numbers_list = [int(roll.strip()) for roll in roll_numbers_list]
 picker = RollNumberPicker(roll_numbers_list)
 
 while True:
-    # Get user input for how many times to pick a random roll number
     times_to_pick = int(input("How many times would you like to pick a roll number? "))
-
-    # Pick the random roll numbers
     multiple_random_rolls = picker.pick_multiple_rolls(times_to_pick)
-
-    # Output the results
     print(f"Randomly selected roll numbers ({times_to_pick} times): {multiple_random_rolls}")
-
-    # Ask if the user wants to continue or exit
     continue_prompt = input("Would you like to pick again? (yes/no): ").strip().lower()
     if continue_prompt != 'yes':
         print("Exiting the program.")
