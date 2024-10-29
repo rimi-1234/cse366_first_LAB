@@ -20,7 +20,7 @@ roll_numbers_list = input("Enter roll numbers separated by commas: ").split(',')
 # Convert input to integers
 roll_numbers_list = [int(roll.strip()) for roll in roll_numbers_list]
 
-# Create a picker object
+
 picker = RollNumberPicker(roll_numbers_list)
 
 while True:
