@@ -1,41 +1,33 @@
 import random
-
-class RollNumberPicker:
+filename = "many_student_ids.txt"
+class RollPicker:
     def __init__(self, roll_numbers):
         self.roll_numbers = roll_numbers
-
     def pick_random_roll(self):
         if not self.roll_numbers:
             return None
-        return random.choice(self.roll_numbers)
-
-    def pick_multiple_rolls(self, times):
-        rolls = []
-        for _ in range(times):
-            rolls.append(self.pick_random_roll())
-        return rolls
-
-# Get user input for roll numbers
-roll_numbers_list = input("Enter roll numbers separated by commas: ").split(',')
-# Convert input to integers
-roll_numbers_list = [int(roll.strip()) for roll in roll_numbers_list]
-
-# Create a picker object
-picker = RollNumberPicker(roll_numbers_list)
-
-while True:
-    # Get user input for how many times to pick a random roll number
-    times_to_pick = int(input("How many times would you like to pick a roll number? "))
-
-    # Pick the random roll numbers
-    multiple_random_rolls = picker.pick_multiple_rolls(times_to_pick)
-
-    # Output the results
-    print(f"Randomly selected roll numbers ({times_to_pick} times): {multiple_random_rolls}")
-
-    # Ask if the user wants to continue or exit
-    continue_prompt = input("Would you like to pick again? (yes/no): ").strip().lower()
-    if continue_prompt != 'yes':
-        print("Exiting the program.")
-        break
-
+        selected_roll = random.choice(self.roll_numbers)
+        self.roll_numbers.remove(selected_roll)
+        return selected_roll
+try:
+    with open(filename, "r") as file:
+        stus_ids = [line.strip() for line in file]
+    select_stus = []
+    not_select_stus = stus_ids.copy()
+    if not_select_stus:
+        print("Students who haven't been selected yet:")
+        for roll in not_select_stus:
+            print(roll)
+        picker = RollPicker(not_select_stus)
+        while picker.roll_numbers:
+            picked_roll = picker.pick_random_roll()
+            if picked_roll:
+                print(f"Randomly selected roll number: {picked_roll}")
+                select_stus.append(picked_roll)
+        print("All students have been picked.")
+        not_select_stus = stus_ids.copy()
+        print("List has been reset. Current students:", not_select_stus)
+    else:
+        print("No students left who haven't been selected.")
+except FileNotFoundError:
+    print(f"The file '{filename}' does not exist.")
